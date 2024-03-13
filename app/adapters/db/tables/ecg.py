@@ -14,6 +14,7 @@ class ECG(Base):
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
     date: Mapped[datetime]
     leads: Mapped[List["Lead"]] = relationship(back_populates="ecg")
+    owner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("user.id"))
 
 
 class Lead(Base):

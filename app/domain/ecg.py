@@ -36,3 +36,20 @@ class ECG(BaseModel):
     leads: List[Lead]
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# Processed models
+
+class Insights(BaseModel):
+    number_of_zero_crossing: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ProcessedLead(Lead):
+    insights: Insights
+
+
+class ProcessedECG(ECG):
+    leads: List[ProcessedLead]
+    owner_id: uuid.UUID

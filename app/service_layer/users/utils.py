@@ -20,6 +20,6 @@ async def create_super_user(email: str, password: str):
                             email=email, password=password, is_superuser=True
                         )
                     )
-                    return True
+                    print(f"User created {email}")
     except UserAlreadyExists:
-        return False
+        print(f"User {email} already exists")

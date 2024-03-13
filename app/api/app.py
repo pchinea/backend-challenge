@@ -1,22 +1,11 @@
-from contextlib import asynccontextmanager
-
 from fastapi import Depends, FastAPI
 
-from app.adapters.db.session import create_db_and_tables
 from app.api.router import router as ecg_router
 from app.domain.users import UserCreate, UserRead
 from app.service_layer.users.config import auth_backend, fastapi_users, current_active_superuser
-from app.service_layer.users.utils import create_super_user
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await create_db_and_tables()
-    await create_super_user("admin@example.com", "1234")
-    yield
-
-
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 # Users router
 app.include_router(

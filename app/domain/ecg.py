@@ -50,6 +50,9 @@ class ProcessedLead(Lead):
     insights: Insights
 
 
-class ProcessedECG(ECG):
+class ECGInsights(ECG):
     leads: List[ProcessedLead]
+
+
+class ProcessedECG(ECGInsights):
     owner_id: uuid.UUID

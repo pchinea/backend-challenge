@@ -13,7 +13,7 @@ class ECG(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
     date: Mapped[datetime]
-    leads: Mapped[List["Lead"]] = relationship(back_populates="ecg")
+    leads: Mapped[List["Lead"]] = relationship(back_populates="ecg", lazy="selectin")
     owner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("user.id"))
 
 
@@ -26,7 +26,7 @@ class Lead(Base):
     name: Mapped[str]
     number_of_samples: Mapped[Optional[int]]
     signal = Column('signal', PickleType)
-    insights: Mapped["Insights"] = relationship(back_populates="lead")
+    insights: Mapped["Insights"] = relationship(back_populates="lead", lazy="selectin")
 
 
 class Insights(Base):

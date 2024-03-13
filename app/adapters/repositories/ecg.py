@@ -1,4 +1,5 @@
 import contextlib
+import uuid
 
 from sqlalchemy.exc import IntegrityError
 
@@ -23,5 +24,13 @@ class ECGRepository:
                 async with session.begin():
                     session.add(db_ecg)
         except IntegrityError:
-            return False
-        return True
+            return None
+        return ProcessedECG.model_validate(db_ecg)
+
+    @staticmethod
+    async def get_ecg_insights(ecg_id: uuid.UUID):
+        async with get_async_session_context() as session:
+            async with session.begin():
+                if db_ecg := await session.get(ECG, ecg_id):
+                    return ProcessedECG.model_validate(db_ecg)
+                return None

@@ -18,7 +18,7 @@ async def receive_ecg(ecg: ECG, user: User = Depends(current_active_user)):
     if not (proc_ecg := await process_ecg(ecg, user)):
         raise HTTPException(status_code=400, detail="ECG_ALREADY_EXISTS")
 
-    return ECGInsights.model_validate(proc_ecg)
+    return ECGInsights.model_validate(proc_ecg.model_dump(exclude={"owner_id"}))
 
 
 @router.get("/{ecg_id}/insights")
@@ -32,4 +32,4 @@ async def get_insights(ecg_id: uuid.UUID, user: User = Depends(current_active_us
     if proc_ecg.owner_id != user.id:
         raise HTTPException(status_code=403, detail="Forbidden")
 
-    return ECGInsights.model_validate(proc_ecg)
+    return ECGInsights.model_validate(proc_ecg.model_dump(exclude={"owner_id"}))

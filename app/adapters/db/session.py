@@ -4,7 +4,8 @@ from fastapi import Depends
 from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from app.adapters.db.tables.users import Base, User
+from app.adapters.db.tables.users import User
+from app.adapters.db.tables.base import Base
 
 DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 

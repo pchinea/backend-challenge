@@ -27,6 +27,8 @@ class Lead(BaseModel):
     number_of_samples: Optional[int] = None
     signal: List[int]
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class ECG(BaseModel):
     id: uuid.UUID

@@ -1,7 +1,6 @@
 import uuid
-from typing import Optional
 
-from fastapi import Depends, Request
+from fastapi import Depends
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.authentication import (
     AuthenticationBackend,
@@ -10,7 +9,8 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
 
-from app.db import User, get_user_db
+from app.adapters.db.session import get_user_db
+from app.adapters.db.tables.users import User
 
 SECRET = "Qme!udKeQXP^W7j%6&jJ$n6yqSJ!Y*K$"
 

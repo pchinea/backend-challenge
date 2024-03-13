@@ -29,7 +29,7 @@ class Lead(BaseModel):
 
 
 class ECG(BaseModel):
-    ecg_id: uuid.UUID
+    id: uuid.UUID
     date: datetime
     leads: List[Lead]
 

@@ -2,10 +2,12 @@ from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI
 
-from app.db import User, create_db_and_tables
-from app.schemas import UserCreate, UserRead, UserUpdate
-from app.users import auth_backend, current_active_user, fastapi_users, current_active_superuser
-from app.utils import create_super_user
+from app.adapters.db.session import create_db_and_tables
+from app.adapters.db.tables.users import User
+from app.domain.ecg import ECG
+from app.domain.users import UserCreate, UserRead, UserUpdate
+from app.service_layer.users.config import auth_backend, current_active_user, fastapi_users, current_active_superuser
+from app.service_layer.users.utils import create_super_user
 
 
 @asynccontextmanager
@@ -46,3 +48,9 @@ app.include_router(
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):
     return {"message": f"Hello {user.email}!"}
+
+
+@app.post("/ecg")
+async def receive_ecg(ecg: ECG):
+    print(ecg.id)
+    return {"message": "ok"}

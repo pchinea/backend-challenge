@@ -15,11 +15,11 @@ async def create_user(db: AsyncSession, email: str, password: str, is_superuser:
     try:
         async with get_user_db_context(db) as user_db:
             async with get_user_manager_context(user_db) as user_manager:
-                await user_manager.create(
+                user = await user_manager.create(
                     UserCreate(
                         email=email, password=password, is_superuser=is_superuser
                     )
                 )
-                print(f"User created {email}")
+                return user
     except UserAlreadyExists:
-        print(f"User {email} already exists")
+        raise

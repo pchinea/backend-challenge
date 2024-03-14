@@ -1,7 +1,17 @@
 import asyncio
+import contextlib
 import sys
 
-from app.service_layer.users.utils import create_super_user
+from app.adapters.db.session import get_async_session
+from app.service_layer.users.utils import create_user
+
+get_async_session_context = contextlib.asynccontextmanager(get_async_session)
+
+
+async def create_super_user(email: str, password: str):
+    async with get_async_session_context() as db:
+        await create_user(db, email, password, True)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

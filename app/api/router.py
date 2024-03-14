@@ -12,7 +12,7 @@ from app.service_layer.users.config import current_active_user
 router = APIRouter()
 
 
-@router.post("", status_code=201)
+@router.post("", status_code=201, response_model=ECGInsights)
 async def receive_ecg(
         ecg: ECG,
         user: User = Depends(current_active_user),
@@ -27,7 +27,7 @@ async def receive_ecg(
     return ECGInsights.model_validate(proc_ecg.model_dump(exclude={"owner_id"}))
 
 
-@router.get("/{ecg_id}/insights")
+@router.get("/{ecg_id}/insights", response_model=ECGInsights)
 async def get_insights(
         ecg_id: uuid.UUID,
         user: User = Depends(current_active_user),

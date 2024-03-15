@@ -1,7 +1,8 @@
 import itertools
+from typing import List
 
 
-def calculate_zero_crossing(signal: list[int]):
+def calculate_zero_crossing(signal: List[int]):
     # remove zeros to avoid counting when it touches zero but not crossing.
     signal = filter(lambda x: x != 0, signal)
 
